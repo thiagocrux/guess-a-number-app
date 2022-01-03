@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, StyleSheet, Text, Button, Alert } from 'react-native';
-import Card from '../components/Card';
 
+import BodyText from '../components/BodyText';
+import Card from '../components/Card';
 import NumberContainer from '../components/NumberContainer';
 
 function generateRandomBetween(min, max, exclude) {
@@ -64,7 +65,7 @@ export default function GameScreen(props) {
 
   return (
     <View style={styles.screen}>
-      <Text>Opponent's Guess</Text>
+      <BodyText>Opponent's Guess</BodyText>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
