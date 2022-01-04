@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Alert, ScrollView, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  Text,
+  FlatList,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import BodyText from '../components/BodyText';
@@ -20,11 +27,20 @@ function generateRandomBetween(min, max, exclude) {
   }
 }
 
-function renderListItem(value, index) {
+// function renderListItem(value, index) {
+//   return (
+//     <View key={value} style={styles.listItem}>
+//       <BodyText>#{index}</BodyText>
+//       <BodyText>{value}</BodyText>
+//     </View>
+//   );
+// }
+
+function renderListItem(listLength, itemData) {
   return (
-    <View key={value} style={styles.listItem}>
-      <BodyText>#{index}</BodyText>
-      <BodyText>{value}</BodyText>
+    <View style={styles.listItem}>
+      <BodyText>#{listLength - itemData.index}</BodyText>
+      <BodyText>{itemData.item}</BodyText>
     </View>
   );
 }
@@ -85,11 +101,17 @@ export default function GameScreen(props) {
         </MainButton>
       </Card>
       <View style={styles.listContainer}>
-        <ScrollView contentContainerStyle={styles.list}>
+        {/* <ScrollView contentContainerStyle={styles.list}>
           {pastGuesses.map((guess, index) =>
             renderListItem(guess, pastGuesses.length - index)
           )}
-        </ScrollView>
+        </ScrollView> */}
+        <FlatList
+          contentContainerStyle={styles.list}
+          data={pastGuesses}
+          renderItem={renderListItem.bind(this, pastGuesses.length)}
+          keyExtractor={item => item}
+        />
       </View>
     </View>
   );
@@ -110,11 +132,10 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    width: '80%',
+    width: '60%',
   },
   list: {
     flexGrow: 1,
-    alignItems: 'center',
     justifyContent: 'flex-end',
   },
   listItem: {
@@ -125,6 +146,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '60%',
+    width: '100%',
   },
 });
